@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/alecthomas/chroma/v2/quick"
+	"github.com/akfaew/chroma-tailwind/v2/quick"
 )
 
 func Example() {

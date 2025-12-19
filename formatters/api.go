@@ -4,10 +4,10 @@ import (
 	"io"
 	"sort"
 
-	"github.com/alecthomas/chroma/v2"
-	"github.com/alecthomas/chroma/v2/formatters/html"
-	"github.com/alecthomas/chroma/v2/formatters/svg"
-	"github.com/alecthomas/chroma/v2/formatters/tailwind"
+	"github.com/akfaew/chroma-tailwind/v2"
+	"github.com/akfaew/chroma-tailwind/v2/formatters/html"
+	"github.com/akfaew/chroma-tailwind/v2/formatters/svg"
+	"github.com/akfaew/chroma-tailwind/v2/formatters/tailwind"
 )
 
 var (

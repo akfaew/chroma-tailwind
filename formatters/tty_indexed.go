@@ -4,7 +4,7 @@ import (
 	"io"
 	"math"
 
-	"github.com/alecthomas/chroma/v2"
+	"github.com/akfaew/chroma-tailwind/v2"
 )
 
 type ttyTable struct {

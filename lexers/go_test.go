@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	assert "github.com/alecthomas/assert/v2"
-	"github.com/alecthomas/chroma/v2"
+	"github.com/akfaew/chroma-tailwind/v2"
 )
 
 func TestGoHTMLTemplateIssue126(t *testing.T) {

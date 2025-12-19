@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/alecthomas/assert/v2"
-	"github.com/alecthomas/chroma/v2"
-	"github.com/alecthomas/chroma/v2/lexers"
-	"github.com/alecthomas/chroma/v2/styles"
+	"github.com/akfaew/chroma-tailwind/v2"
+	"github.com/akfaew/chroma-tailwind/v2/lexers"
+	"github.com/akfaew/chroma-tailwind/v2/styles"
 )
 
 func TestTailwindFormatterGitHubDark(t *testing.T) {

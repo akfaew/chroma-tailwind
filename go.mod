@@ -1,4 +1,4 @@
-module github.com/alecthomas/chroma/v2
+module github.com/akfaew/chroma-tailwind/v2
 
 go 1.22
 
