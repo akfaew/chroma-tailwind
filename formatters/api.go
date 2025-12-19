@@ -7,6 +7,7 @@ import (
 	"github.com/alecthomas/chroma/v2"
 	"github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/alecthomas/chroma/v2/formatters/svg"
+	"github.com/alecthomas/chroma/v2/formatters/tailwind"
 )
 
 var (
@@ -22,6 +23,7 @@ var (
 	// Default HTML formatter outputs self-contained HTML.
 	htmlFull = Register("html", html.New(html.Standalone(true), html.WithClasses(true))) // nolint
 	SVG      = Register("svg", svg.New(svg.EmbedFont("Liberation Mono", svg.FontLiberationMono, svg.WOFF)))
+	twFull   = Register("tailwind", tailwind.New())
 )
 
 // Fallback formatter.

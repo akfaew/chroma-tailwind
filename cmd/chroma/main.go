@@ -24,6 +24,7 @@ import (
 	"github.com/alecthomas/chroma/v2"
 	"github.com/alecthomas/chroma/v2/formatters"
 	"github.com/alecthomas/chroma/v2/formatters/html"
+	"github.com/alecthomas/chroma/v2/formatters/tailwind"
 	"github.com/alecthomas/chroma/v2/lexers"
 	"github.com/alecthomas/chroma/v2/styles"
 )
@@ -72,6 +73,9 @@ command, for Go.
 		HTMLBaseLine              int    `group:"html" help:"Base line number." default:"1"`
 		HTMLPreventSurroundingPre bool   `group:"html" help:"Prevent the surrounding pre tag."`
 		HTMLLinkableLines         bool   `group:"html" help:"Make the line numbers linkable and be a link to themselves."`
+
+		TailwindDarkStyle string `group:"tailwind" help:"Dark style for Tailwind formatter." placeholder:"STYLE"`
+		TailwindPrefix    string `group:"tailwind" help:"Tailwind class prefix." placeholder:"PREFIX"`
 
 		Files []string `arg:"" optional:"" help:"Files to highlight." type:"existingfile"`
 	}
@@ -149,9 +153,10 @@ func main() {
 		"styles":     strings.Join(styles.Names(), ","),
 		"formatters": strings.Join(formatters.Names(), ","),
 	}, kong.Groups{
-		"format": "Output format:",
-		"select": "Select lexer and style:",
-		"html":   "HTML formatter options:",
+		"format":   "Output format:",
+		"select":   "Select lexer and style:",
+		"html":     "HTML formatter options:",
+		"tailwind": "Tailwind formatter options:",
 	})
 	if cli.XML != "" {
 		err := dumpXMLLexerDefinitions(cli.XML)
@@ -218,6 +223,9 @@ func main() {
 	if cli.Formatter == "html" {
 		configureHTMLFormatter(ctx)
 	}
+	if cli.Formatter == "tailwind" {
+		configureTailwindFormatter(ctx)
+	}
 
 	// Dump styles.
 	if cli.HTMLStyles {
@@ -267,11 +275,15 @@ func main() {
 }
 
 func selectStyle() (*chroma.Style, error) {
-	style, ok := styles.Registry[cli.Style]
+	return selectStyleByName(cli.Style)
+}
+
+func selectStyleByName(name string) (*chroma.Style, error) {
+	style, ok := styles.Registry[name]
 	if ok {
 		return style, nil
 	}
-	r, err := os.Open(cli.Style)
+	r, err := os.Open(name)
 	if err != nil {
 		return nil, err
 	}
@@ -311,6 +323,19 @@ func configureHTMLFormatter(ctx *kong.Context) {
 		options = append(options, html.HighlightLines(ranges))
 	}
 	formatters.Register("html", html.New(options...))
+}
+
+func configureTailwindFormatter(ctx *kong.Context) {
+	options := []tailwind.Option{}
+	if cli.TailwindPrefix != "" {
+		options = append(options, tailwind.ClassPrefix(cli.TailwindPrefix))
+	}
+	if cli.TailwindDarkStyle != "" {
+		darkStyle, err := selectStyleByName(cli.TailwindDarkStyle)
+		ctx.FatalIfErrorf(err)
+		options = append(options, tailwind.WithDarkStyle(darkStyle))
+	}
+	formatters.Register("tailwind", tailwind.New(options...))
 }
 
 func listAll() {
